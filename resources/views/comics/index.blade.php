@@ -28,6 +28,12 @@
             <td>
                 <a href="{{route("comics.show", $comic["id"])}}"><button type="button" class="btn btn-primary">Visualizza</button></a>
                 <a href="{{route("comics.edit", $comic["id"])}}"><button type="submit" class="btn btn-success">Modifica</button></a>
+
+                <form action="{{route("comics.destroy", $comic["id"])}}" method="POST">
+                    @csrf
+                    @method("DELETE")
+                    <button type="submit" class="btn btn-danger">Elimina</button>
+                </form>
             </td>
         </tr>
         @endforeach
