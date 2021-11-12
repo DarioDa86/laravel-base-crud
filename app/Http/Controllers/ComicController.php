@@ -38,14 +38,16 @@ class ComicController extends Controller
     {
         $data = $request ->all();
 
-        $newComic = new Comic();
-        $newComic->title = $data["title"];
-        $newComic->description = $data["description"];
-        $newComic->thumb = $data["thumb"];
-        $newComic->price = $data["price"];
-        $newComic->series = $data["series"];
-        $newComic->type = $data["type"];
-        $newComic->save();
+        // $newComic = new Comic();
+        // $newComic->title = $data["title"];
+        // $newComic->description = $data["description"];
+        // $newComic->thumb = $data["thumb"];
+        // $newComic->price = $data["price"];
+        // $newComic->series = $data["series"];
+        // $newComic->type = $data["type"];
+        // $newComic->save();
+        
+        $newComic = Comic::create($data);
 
         return redirect()->route("comics.show", $newComic->id);
     }
@@ -56,9 +58,9 @@ class ComicController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Comic $comic)
     {
-        $comic = Comic::find($id);
+        
 
         return view("comics.show", compact("comic"));
         
@@ -70,9 +72,9 @@ class ComicController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Comic $comic)
     {
-        //
+        return view("comics.edit", compact("comic"));
     }
 
     /**
@@ -82,9 +84,14 @@ class ComicController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Comic $comic)
     {
-        //
+        $data = $request ->all();
+
+        $comic -> update($data);
+
+        return redirect()->route("comics.show", $comic->id);
+
     }
 
     /**

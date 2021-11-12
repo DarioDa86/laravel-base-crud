@@ -25,7 +25,10 @@
             <td>{{$comic["price"]}}</td>
             <td>{{$comic["series"]}}</td>
             <td>{{$comic["type"]}}</td>
-            <td><a href="{{route("comics.show", $comic["id"])}}"><button type="button" class="btn btn-primary">Visualizza</button></a></td>
+            <td>
+                <a href="{{route("comics.show", $comic["id"])}}"><button type="button" class="btn btn-primary">Visualizza</button></a>
+                <a href="{{route("comics.edit", $comic["id"])}}"><button type="submit" class="btn btn-success">Modifica</button></a>
+            </td>
         </tr>
         @endforeach
     </tbody>
