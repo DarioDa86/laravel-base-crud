@@ -7,6 +7,14 @@ use App\Comic;
 
 class ComicController extends Controller
 {
+    protected $validationRules = [
+        'title'=>'required|max:30',
+        'description'=>'required',
+        'thumb'=>'nullable|url',
+        'price'=>'required|integer',
+        'series'=>'required|max:30',
+        'type'=>'required|max:30',
+    ];
     /**
      * Display a listing of the resource.
      *
@@ -36,19 +44,13 @@ class ComicController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request ->all();
-
-        // $newComic = new Comic();
-        // $newComic->title = $data["title"];
-        // $newComic->description = $data["description"];
-        // $newComic->thumb = $data["thumb"];
-        // $newComic->price = $data["price"];
-        // $newComic->series = $data["series"];
-        // $newComic->type = $data["type"];
-        // $newComic->save();
+        // dd($request->all());
+        $request->validate($this->validationRules);
         
-        $newComic = Comic::create($data);
+        $data = $request->all();
 
+        $newComic = Comic::create($data);
+        
         return redirect()->route("comics.show", $newComic->id);
     }
 
@@ -86,6 +88,8 @@ class ComicController extends Controller
      */
     public function update(Request $request, Comic $comic)
     {
+        $request->validate($this->validationRules);
+
         $data = $request ->all();
 
         $comic -> update($data);
